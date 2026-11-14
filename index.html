@@ -8,99 +8,61 @@
     :root {
       --bg: #0f172a;
       --card: #1e293b;
+      --border: #334155;
       --text: #f8fafc;
       --muted: #94a3b8;
       --accent: #38bdf8;
       --accent-hover: #0284c7;
+      --success: #22c55e;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
     body { background: var(--bg); color: var(--text); line-height: 1.5; }
-    header { padding: 1.5rem 2rem; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; color: var(--accent); }
-    .hero { text-align: center; padding: 4rem 1.5rem 2.5rem; max-width: 720px; margin: 0 auto; }
-    .hero h1 { font-size: 2.5rem; margin-bottom: 0.75rem; }
-    .hero p { color: var(--muted); font-size: 1.1rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 2rem auto 4rem; padding: 0 1.5rem; }
-    .card { background: var(--card); border: 1px solid #334155; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
-    .product-img { width: 100%; height: 210px; object-fit: cover; background: #0b1120; display: block; border-bottom: 1px solid #334155; }
-    .card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
-    .badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 999px; margin-bottom: 0.75rem; width: fit-content; }
-    .card h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-    .card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 1.25rem; }
-    .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
-    .price { font-size: 1.35rem; font-weight: 700; }
-    .buy-btn { background: var(--accent); color: #0f172a; text-decoration: none; font-weight: 700; padding: 0.65rem 1.1rem; border-radius: 8px; transition: background 0.2s; }
-    .buy-btn:hover { background: var(--accent-hover); color: #fff; }
-    footer { text-align: center; padding: 2rem; border-top: 1px solid #334155; color: var(--muted); font-size: 0.85rem; }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">CAMPUS LIFE</div>
-    <span>Free Dorm Shipping</span>
-  </header>
+    
+    /* Header & Cart Button */
+    header { position: sticky; top: 0; z-index: 20; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(8px); padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; color: var(--accent); }
+    .cart-trigger { background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 0.55rem 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+    .cart-count { background: var(--accent); color: #0f172a; padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.8rem; }
 
-  <section class="hero">
-    <h1>Upgrade Your Dorm Room</h1>
-    <p>Damage-free lighting, space-saving organizers, and pocket projectors built for campus life.</p>
-  </section>
+    /* Hero & Filters */
+    .hero { text-align: center; padding: 3rem 1.5rem 1.5rem; max-width: 720px; margin: 0 auto; }
+    .hero h1 { font-size: 2.25rem; margin-bottom: 0.5rem; }
+    .hero p { color: var(--muted); font-size: 1.05rem; }
+    .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; padding: 1rem 1.5rem 0; }
+    .filter-btn { background: var(--card); color: var(--muted); border: 1px solid var(--border); padding: 0.45rem 0.95rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .filter-btn.active { background: var(--accent); color: #0f172a; border-color: var(--accent); }
 
-  <main class="grid">
-    <article class="card">
-      <img class="product-img" src="images/sunset.jpg" alt="UV Sunset Projection Lamp" />
-      <div class="card-body">
-        <span class="badge">Ambient Lighting</span>
-        <h2>UV Sunset Projection Lamp</h2>
-        <p>Tilting 180-degree lamp head casts warm sunset glows across cinderblock walls via USB power.</p>
-        <div class="price-row">
-          <span class="price">$24.99</span>
-          <a class="buy-btn" href="https://buy.stripe.com/YOUR_SUNSET_LINK" target="_blank" rel="noopener">Buy Now</a>
-        </div>
-      </div>
-    </article>
+    /* Product Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; max-width: 1150px; margin: 1.75rem auto 4rem; padding: 0 1.5rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+    .clickable-area { cursor: pointer; }
+    .product-img { width: 100%; height: 200px; object-fit: cover; background: #0b1120; display: block; border-bottom: 1px solid var(--border); }
+    .card-body { padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--accent); font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; width: fit-content; }
+    .card h2 { font-size: 1.15rem; margin-bottom: 0.35rem; }
+    .rating-preview { color: #fbbf24; font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
+    .price { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.85rem; }
+    
+    /* Dual Action Buttons */
+    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: auto; }
+    .btn { padding: 0.65rem 0.75rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; text-align: center; cursor: pointer; text-decoration: none; border: none; transition: 0.15s; }
+    .btn-cart { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    .btn-cart:hover { background: rgba(56, 189, 248, 0.12); }
+    .btn-buy { background: var(--accent); color: #0f172a; }
+    .btn-buy:hover { background: var(--accent-hover); color: #fff; }
 
-    <article class="card">
-      <img class="product-img" src="images/galaxy.jpg" alt="Galaxy Star & Sound Projector" />
-      <div class="card-body">
-        <span class="badge">Sleep & Study</span>
-        <h2>Galaxy Star & Sound Projector</h2>
-        <p>Projects 34 nebula and laser star modes on your ceiling with soothing soundscapes for noisy halls.</p>
-        <div class="price-row">
-          <span class="price">$44.99</span>
-          <a class="buy-btn" href="https://buy.stripe.com/YOUR_GALAXY_LINK" target="_blank" rel="noopener">Buy Now</a>
-        </div>
-      </div>
-    </article>
+    /* Modals & Cart Drawer */
+    .overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.78); display: none; z-index: 40; align-items: center; justify-content: center; padding: 1rem; }
+    .overlay.open { display: flex; }
+    .modal { background: var(--card); border: 1px solid var(--border); border-radius: 14px; max-width: 520px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 1.5rem; position: relative; }
+    .close-btn { position: absolute; top: 1rem; right: 1rem; background: #0f172a; color: var(--text); border: 1px solid var(--border); width: 32px; height: 32px; border-radius: 999px; font-weight: 700; cursor: pointer; }
+    .modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; background: #0b1120; }
+    .reviews-box { margin-top: 1.25rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .review-item { background: #0f172a; padding: 0.75rem; border-radius: 8px; margin-top: 0.6rem; font-size: 0.85rem; }
+    .review-author { font-weight: 700; color: var(--accent); margin-bottom: 0.2rem; }
 
-    <article class="card">
-      <img class="product-img" src="images/led.jpg" alt="25ft Smart RGBIC LED Strip" />
-      <div class="card-body">
-        <span class="badge">Music Sync</span>
-        <h2>25ft Smart RGBIC LED Strip</h2>
-        <p>App-controlled color-chasing LEDs that pulse to your dorm playlist without damaging paint.</p>
-        <div class="price-row">
-          <span class="price">$29.99</span>
-          <a class="buy-btn" href="https://buy.stripe.com/YOUR_LED_LINK" target="_blank" rel="noopener">Buy Now</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="card">
-      <img class="product-img" src="images/projector.jpg" alt="Pocket 1080p Mini Projector" />
-      <div class="card-body">
-        <span class="badge">Dorm Cinema</span>
-        <h2>Pocket 1080p Mini Projector</h2>
-        <p>Rechargeable wireless projector mirrors your phone onto any wall for instant dorm movie nights.</p>
-        <div class="price-row">
-          <span class="price">$149.99</span>
-          <a class="buy-btn" href="https://buy.stripe.com/YOUR_PROJECTOR_LINK" target="_blank" rel="noopener">Buy Now</a>
-        </div>
-      </div>
-    </article>
-  </main>
-
-  <footer>
-    &copy; 2026 Campus Life Store. Questions? Email support@campuslifestore.com
-  </footer>
-</body>
-</html>
+    /* Cart Drawer */
+    .drawer-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.75); display: none; z-index: 50; justify-content: flex-end; }
+    .drawer-overlay.open { display: flex; }
+    .drawer { background: var(--card); width: 100%; max-width: 390px; height: 100%; padding: 1.5rem; display: flex; flex-direction: column; border-left: 1px
