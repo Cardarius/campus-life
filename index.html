@@ -21,7 +21,9 @@
     .hero h1 { font-size: 2.5rem; margin-bottom: 0.75rem; }
     .hero p { color: var(--muted); font-size: 1.1rem; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 2rem auto 4rem; padding: 0 1.5rem; }
-    .card { background: var(--card); border: 1px solid #334155; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .card { background: var(--card); border: 1px solid #334155; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
+    .product-img { width: 100%; height: 210px; object-fit: cover; background: #0b1120; display: block; border-bottom: 1px solid #334155; }
+    .card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
     .badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--accent); font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 999px; margin-bottom: 0.75rem; width: fit-content; }
     .card h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
     .card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 1.25rem; }
@@ -45,51 +47,54 @@
 
   <main class="grid">
     <article class="card">
-      <div>
+      <img class="product-img" src="images/sunset.jpg" alt="UV Sunset Projection Lamp" />
+      <div class="card-body">
         <span class="badge">Ambient Lighting</span>
         <h2>UV Sunset Projection Lamp</h2>
         <p>Tilting 180-degree lamp head casts warm sunset glows across cinderblock walls via USB power.</p>
-      </div>
-      <div class="price-row">
-        <span class="price">$24.99</span>
-        <!-- Replace # with your live Stripe Payment Link -->
-        <a class="buy-btn" href="https://buy.stripe.com/YOUR_SUNSET_LINK" target="_blank" rel="noopener">Buy Now</a>
+        <div class="price-row">
+          <span class="price">$24.99</span>
+          <a class="buy-btn" href="https://buy.stripe.com/YOUR_SUNSET_LINK" target="_blank" rel="noopener">Buy Now</a>
+        </div>
       </div>
     </article>
 
     <article class="card">
-      <div>
+      <img class="product-img" src="images/galaxy.jpg" alt="Galaxy Star & Sound Projector" />
+      <div class="card-body">
         <span class="badge">Sleep & Study</span>
         <h2>Galaxy Star & Sound Projector</h2>
         <p>Projects 34 nebula and laser star modes on your ceiling with soothing soundscapes for noisy halls.</p>
-      </div>
-      <div class="price-row">
-        <span class="price">$44.99</span>
-        <a class="buy-btn" href="https://buy.stripe.com/YOUR_GALAXY_LINK" target="_blank" rel="noopener">Buy Now</a>
+        <div class="price-row">
+          <span class="price">$44.99</span>
+          <a class="buy-btn" href="https://buy.stripe.com/YOUR_GALAXY_LINK" target="_blank" rel="noopener">Buy Now</a>
+        </div>
       </div>
     </article>
 
     <article class="card">
-      <div>
+      <img class="product-img" src="images/led.jpg" alt="25ft Smart RGBIC LED Strip" />
+      <div class="card-body">
         <span class="badge">Music Sync</span>
         <h2>25ft Smart RGBIC LED Strip</h2>
         <p>App-controlled color-chasing LEDs that pulse to your dorm playlist without damaging paint.</p>
-      </div>
-      <div class="price-row">
-        <span class="price">$29.99</span>
-        <a class="buy-btn" href="https://buy.stripe.com/YOUR_LED_LINK" target="_blank" rel="noopener">Buy Now</a>
+        <div class="price-row">
+          <span class="price">$29.99</span>
+          <a class="buy-btn" href="https://buy.stripe.com/YOUR_LED_LINK" target="_blank" rel="noopener">Buy Now</a>
+        </div>
       </div>
     </article>
 
     <article class="card">
-      <div>
+      <img class="product-img" src="images/projector.jpg" alt="Pocket 1080p Mini Projector" />
+      <div class="card-body">
         <span class="badge">Dorm Cinema</span>
         <h2>Pocket 1080p Mini Projector</h2>
         <p>Rechargeable wireless projector mirrors your phone onto any wall for instant dorm movie nights.</p>
-      </div>
-      <div class="price-row">
-        <span class="price">$149.99</span>
-        <a class="buy-btn" href="https://buy.stripe.com/YOUR_PROJECTOR_LINK" target="_blank" rel="noopener">Buy Now</a>
+        <div class="price-row">
+          <span class="price">$149.99</span>
+          <a class="buy-btn" href="https://buy.stripe.com/YOUR_PROJECTOR_LINK" target="_blank" rel="noopener">Buy Now</a>
+        </div>
       </div>
     </article>
   </main>
