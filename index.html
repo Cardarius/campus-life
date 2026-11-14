@@ -5,64 +5,180 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Campus Life | Dorm Room Essentials</title>
   <style>
-    :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --border: #334155;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --accent-hover: #0284c7;
-      --success: #22c55e;
+    :root { --bg:#0f172a; --card:#1e293b; --border:#334155; --text:#f8fafc; --muted:#94a3b8; --accent:#38bdf8; --hover:#0284c7; }
+    * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,sans-serif; }
+    body { background:var(--bg); color:var(--text); line-height:1.5; }
+    header { position:sticky; top:0; z-index:20; background:rgba(15,23,42,.95); padding:1rem 1.5rem; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+    .logo { font-size:1.4rem; font-weight:800; color:var(--accent); }
+    .cart-btn { background:var(--card); color:var(--text); border:1px solid var(--border); padding:.5rem .9rem; border-radius:8px; font-weight:700; cursor:pointer; }
+    .badge-cnt { background:var(--accent); color:#0f172a; padding:.1rem .45rem; border-radius:99px; font-size:.8rem; margin-left:4px; }
+    .hero { text-align:center; padding:2.5rem 1.25rem 1rem; max-width:700px; margin:0 auto; }
+    .hero h1 { font-size:2.1rem; margin-bottom:.4rem; }
+    .hero p { color:var(--muted); }
+    .filters { display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem; padding:1rem; }
+    .f-btn { background:var(--card); color:var(--muted); border:1px solid var(--border); padding:.4rem .9rem; border-radius:99px; font-weight:600; cursor:pointer; }
+    .f-btn.active { background:var(--accent); color:#0f172a; border-color:var(--accent); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(265px,1fr)); gap:1.25rem; max-width:1100px; margin:1rem auto 3rem; padding:0 1.25rem; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
+    .p-img { width:100%; height:190px; object-fit:cover; background:#0b1120; display:block; border-bottom:1px solid var(--border); }
+    .c-body { padding:1.2rem; display:flex; flex-direction:column; flex-grow:1; }
+    .tag { background:rgba(56,189,248,.15); color:var(--accent); font-size:.72rem; font-weight:700; padding:.2rem .55rem; border-radius:99px; width:fit-content; margin-bottom:.5rem; }
+    .stars { color:#fbbf24; font-size:.85rem; margin:.25rem 0 .5rem; }
+    .desc { color:var(--muted); font-size:.9rem; margin-bottom:1rem; }
+    .price { font-size:1.3rem; font-weight:800; margin-bottom:.8rem; margin-top:auto; }
+    .btns { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; }
+    .btn { padding:.6rem; border-radius:8px; font-weight:700; font-size:.86rem; text-align:center; cursor:pointer; text-decoration:none; border:none; }
+    .b-cart { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+    .b-buy { background:var(--accent); color:#0f172a; }
+    .overlay { position:fixed; inset:0; background:rgba(2,6,23,.82); display:none; z-index:40; align-items:center; justify-content:center; padding:1rem; }
+    .overlay.open { display:flex; }
+    .modal { background:var(--card); border:1px solid var(--border); border-radius:14px; max-width:500px; width:100%; max-height:86vh; overflow-y:auto; padding:1.4rem; position:relative; }
+    .x-btn { position:absolute; top:.8rem; right:.8rem; background:#0f172a; color:#fff; border:1px solid var(--border); width:30px; height:30px; border-radius:99px; cursor:pointer; font-weight:700; }
+    .rev { background:#0f172a; padding:.7rem; border-radius:8px; margin-top:.6rem; font-size:.85rem; }
+    .drawer-bg { position:fixed; inset:0; background:rgba(2,6,23,.8); display:none; z-index:50; justify-content:flex-end; }
+    .drawer-bg.open { display:flex; }
+    .drawer { background:var(--card); width:100%; max-width:370px; height:100%; padding:1.4rem; display:flex; flex-direction:column; border-left:1px solid var(--border); }
+    .c-list { flex-grow:1; overflow-y:auto; margin:1rem 0; display:flex; flex-direction:column; gap:.75rem; }
+    .c-row { display:flex; justify-content:space-between; align-items:center; background:#0f172a; padding:.7rem; border-radius:8px; }
+    .q-btn { background:var(--card); color:#fff; border:1px solid var(--border); width:26px; height:26px; border-radius:6px; cursor:pointer; font-weight:700; }
+    footer { text-align:center; padding:1.5rem; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">CAMPUS LIFE</div>
+    <button class="cart-btn" onclick="openCart(true)">Cart <span class="badge-cnt" id="cnt">0</span></button>
+  </header>
+
+  <section class="hero">
+    <h1>Upgrade Your Dorm Room</h1>
+    <p>Tap any product for full details &amp; student reviews, add to cart, or buy instantly.</p>
+  </section>
+
+  <div class="filters">
+    <button class="f-btn active" onclick="setFilter('All',this)">All</button>
+    <button class="f-btn" onclick="setFilter('Lighting',this)">Lighting &amp; Tech</button>
+    <button class="f-btn" onclick="setFilter('Bedding',this)">Twin XL Sheets</button>
+    <button class="f-btn" onclick="setFilter('Shower',this)">Shower Gear</button>
+  </div>
+
+  <main class="grid" id="grid"></main>
+
+  <div class="overlay" id="pModal" onclick="if(event.target===this)closeModal()">
+    <div class="modal" id="mBox"></div>
+  </div>
+
+  <div class="drawer-bg" id="cDrawer" onclick="if(event.target===this)openCart(false)">
+    <div class="drawer">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2>Your Cart</h2>
+        <button class="q-btn" onclick="openCart(false)">✕</button>
+      </div>
+      <div class="c-list" id="cList"></div>
+      <div style="border-top:1px solid var(--border);padding-top:1rem;">
+        <div style="display:flex;justify-content:space-between;font-size:1.2rem;font-weight:800;margin-bottom:.8rem;">
+          <span>Total</span><span id="cTotal">$0.00</span>
+        </div>
+        <a class="btn b-buy" style="display:block;" href="https://buy.stripe.com/YOUR_CART_LINK" target="_blank">Checkout Cart</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>&copy; 2026 Campus Life Store &bull; support@campuslifestore.com</footer>
+
+  <script>
+    const items = [
+      { id:"sunset", cat:"Lighting", tag:"Ambient Lighting", name:"UV Sunset Projection Lamp", price:24.99, rate:"4.8 ★ (142)", img:"images/sunset.jpg", link:"https://buy.stripe.com/YOUR_SUNSET_LINK", short:"Tilting 180° lamp head casts warm sunset glows across dorm walls.", full:"USB-powered sunset projector with 180-degree rotation. Transforms blank cinderblock walls without nails or tape.", rev:[["Maya T.","Makes my concrete dorm wall look cozy without thumbtacks."],["Jordan K.","Plugs straight into my desk USB hub."]] },
+      { id:"galaxy", cat:"Lighting", tag:"Sleep & Study", name:"Galaxy Star & Sound Projector", price:44.99, rate:"4.9 ★ (98)", img:"images/galaxy.jpg", link:"https://buy.stripe.com/YOUR_GALAXY_LINK", short:"34 nebula & star modes with soothing sounds for noisy halls.", full:"Projects nebula clouds and laser stars across your ceiling with built-in rain and white noise tracks plus remote control.", rev:[["Devon R.","Rain mode + blue nebula saved my sleep during finals."],["Chloe W.","Remote works right from the top bunk."]] },
+      { id:"led", cat:"Lighting", tag:"Music Sync", name:"25ft Smart RGBIC LED Strip", price:29.99, rate:"4.7 ★ (215)", img:"images/led.jpg", link:"https://buy.stripe.com/YOUR_LED_LINK", short:"App-controlled color-chasing LEDs that pulse to music.", full:"25-foot addressable RGBIC light strip with built-in music mic and paint-safe mounting clips for dorm move-out.", rev:[["Tyler B.","Wrapped around my whole room with spare length."],["Samira L.","Mounting clips kept the paint clean at move-out."]] },
+      { id:"proj", cat:"Lighting", tag:"Dorm Cinema", name:"Pocket 1080p Mini Projector", price:149.99, rate:"4.8 ★ (64)", img:"images/proj.jpg", link:"https://buy.stripe.com/YOUR_PROJECTOR_LINK", short:"Rechargeable wireless projector mirrors your phone onto any wall.", full:"Pocket-sized 1080p-supported projector with built-in battery and wireless phone casting for dorm movie nights.", rev:[["Marcus H.","Way easier than hauling a TV up three flights of stairs."],["Elena G.","Sharp picture in a dark dorm room."]] },
+      { id:"sheets", cat:"Bedding", tag:"Twin XL Fit", name:"Bedside Pocket Twin XL Sheets", price:32.99, rate:"4.9 ★ (184)", img:"images/sheets.jpg", link:"https://buy.stripe.com/YOUR_SHEETS_LINK", short:"Soft microfiber Twin XL set with built-in phone pockets.", full:"Extra-long 80-inch Twin XL fitted sheet, flat sheet, and pillowcase with dual side storage pockets for lofted beds.", rev:[["Alyssa M.","Side pockets are a lifesaver on a lofted bed."],["Caleb D.","Stays hooked over my mattress topper."]] },
+      { id:"shoes", cat:"Shower", tag:"Quick-Dry EVA", name:"Non-Slip Dorm Shower Slides", price:18.99, rate:"4.8 ★ (156)", img:"images/shoes.jpg", link:"https://buy.stripe.com/YOUR_SHOES_LINK", short:"Waterproof EVA slides with drainage holes and grippy soles.", full:"Thick cushioned EVA shower slides built for communal hall bathrooms. Drains water fast and grips wet tile.", rev:[["Noah P.","Solid grip on wet tile and dries in 10 minutes."],["Brianna S.","Way more comfortable than cheap flip-flops."]] },
+      { id:"caddy", cat:"Shower", tag:"8-Pocket Mesh", name:"Mesh Dorm Shower Caddy Bag", price:16.99, rate:"4.9 ★ (209)", img:"images/caddy.jpg", link:"https://buy.stripe.com/YOUR_CADDY_LINK", short:"Breathable 8-pocket hanging shower tote that dries fast.", full:"Holds full-size shampoo, body wash, and razors across 8 outer pockets plus a large center compartment.", rev:[["Kayla J.","Fits full-size bottles and dries fast on my hook."],["Liam W.","Sturdy handles that don't dig into your hand."]] }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem("cl_cart") || "[]");
+
+    function render(cat="All") {
+      const list = cat==="All" ? items : items.filter(x => x.cat===cat);
+      document.getElementById("grid").innerHTML = list.map(p => `
+        <article class="card">
+          <div style="cursor:pointer" onclick="showModal('${p.id}')">
+            <img class="p-img" src="${p.img}" alt="${p.name}" onerror="this.style.display='none'">
+            <div class="c-body" style="padding-bottom:0">
+              <span class="tag">${p.tag}</span>
+              <h3>${p.name}</h3>
+              <div class="stars">${p.rate}</div>
+              <p class="desc">${p.short}</p>
+            </div>
+          </div>
+          <div class="c-body" style="padding-top:0">
+            <div class="price">$${p.price.toFixed(2)}</div>
+            <div class="btns">
+              <button class="btn b-cart" onclick="addCart('${p.id}')">Add to Cart</button>
+              <a class="btn b-buy" href="${p.link}" target="_blank">Buy Now</a>
+            </div>
+          </div>
+        </article>`).join("");
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-    body { background: var(--bg); color: var(--text); line-height: 1.5; }
-    
-    /* Header & Cart Button */
-    header { position: sticky; top: 0; z-index: 20; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(8px); padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; color: var(--accent); }
-    .cart-trigger { background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 0.55rem 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
-    .cart-count { background: var(--accent); color: #0f172a; padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.8rem; }
 
-    /* Hero & Filters */
-    .hero { text-align: center; padding: 3rem 1.5rem 1.5rem; max-width: 720px; margin: 0 auto; }
-    .hero h1 { font-size: 2.25rem; margin-bottom: 0.5rem; }
-    .hero p { color: var(--muted); font-size: 1.05rem; }
-    .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; padding: 1rem 1.5rem 0; }
-    .filter-btn { background: var(--card); color: var(--muted); border: 1px solid var(--border); padding: 0.45rem 0.95rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
-    .filter-btn.active { background: var(--accent); color: #0f172a; border-color: var(--accent); }
+    function setFilter(c, el) {
+      document.querySelectorAll(".f-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      render(c);
+    }
 
-    /* Product Grid */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.5rem; max-width: 1150px; margin: 1.75rem auto 4rem; padding: 0 1.5rem; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-    .clickable-area { cursor: pointer; }
-    .product-img { width: 100%; height: 200px; object-fit: cover; background: #0b1120; display: block; border-bottom: 1px solid var(--border); }
-    .card-body { padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1; }
-    .badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: var(--accent); font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px; margin-bottom: 0.6rem; width: fit-content; }
-    .card h2 { font-size: 1.15rem; margin-bottom: 0.35rem; }
-    .rating-preview { color: #fbbf24; font-size: 0.85rem; margin-bottom: 0.5rem; }
-    .card p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
-    .price { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.85rem; }
-    
-    /* Dual Action Buttons */
-    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: auto; }
-    .btn { padding: 0.65rem 0.75rem; border-radius: 8px; font-weight: 700; font-size: 0.88rem; text-align: center; cursor: pointer; text-decoration: none; border: none; transition: 0.15s; }
-    .btn-cart { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-    .btn-cart:hover { background: rgba(56, 189, 248, 0.12); }
-    .btn-buy { background: var(--accent); color: #0f172a; }
-    .btn-buy:hover { background: var(--accent-hover); color: #fff; }
+    function showModal(id) {
+      const p = items.find(x => x.id===id);
+      document.getElementById("mBox").innerHTML = `
+        <button class="x-btn" onclick="closeModal()">✕</button>
+        <img class="p-img" style="border-radius:8px;margin-bottom:.8rem" src="${p.img}" onerror="this.style.display='none'">
+        <span class="tag">${p.tag}</span>
+        <h2>${p.name}</h2>
+        <div class="stars">${p.rate}</div>
+        <div class="price" style="margin:.4rem 0 .7rem">$${p.price.toFixed(2)}</div>
+        <p style="margin-bottom:1rem;font-size:.93rem">${p.full}</p>
+        <div class="btns">
+          <button class="btn b-cart" onclick="addCart('${p.id}');closeModal()">Add to Cart</button>
+          <a class="btn b-buy" href="${p.link}" target="_blank">Buy Now</a>
+        </div>
+        <div style="margin-top:1.1rem;border-top:1px solid var(--border);padding-top:.8rem">
+          <h4>Student Reviews</h4>
+          ${p.rev.map(r => `<div class="rev"><strong style="color:var(--accent)">${r[0]}</strong><div>"${r[1]}"</div></div>`).join("")}
+        </div>`;
+      document.getElementById("pModal").classList.add("open");
+    }
 
-    /* Modals & Cart Drawer */
-    .overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.78); display: none; z-index: 40; align-items: center; justify-content: center; padding: 1rem; }
-    .overlay.open { display: flex; }
-    .modal { background: var(--card); border: 1px solid var(--border); border-radius: 14px; max-width: 520px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 1.5rem; position: relative; }
-    .close-btn { position: absolute; top: 1rem; right: 1rem; background: #0f172a; color: var(--text); border: 1px solid var(--border); width: 32px; height: 32px; border-radius: 999px; font-weight: 700; cursor: pointer; }
-    .modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; background: #0b1120; }
-    .reviews-box { margin-top: 1.25rem; border-top: 1px solid var(--border); padding-top: 1rem; }
-    .review-item { background: #0f172a; padding: 0.75rem; border-radius: 8px; margin-top: 0.6rem; font-size: 0.85rem; }
-    .review-author { font-weight: 700; color: var(--accent); margin-bottom: 0.2rem; }
+    function closeModal() { document.getElementById("pModal").classList.remove("open"); }
+    function openCart(s) { document.getElementById("cDrawer").classList.toggle("open", s); }
 
-    /* Cart Drawer */
-    .drawer-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.75); display: none; z-index: 50; justify-content: flex-end; }
-    .drawer-overlay.open { display: flex; }
-    .drawer { background: var(--card); width: 100%; max-width: 390px; height: 100%; padding: 1.5rem; display: flex; flex-direction: column; border-left: 1px
+    function addCart(id) {
+      const found = cart.find(x => x.id===id);
+      found ? found.q++ : cart.push({id, q:1});
+      syncCart(); openCart(true);
+    }
+
+    function chgQty(id, d) {
+      const found = cart.find(x => x.id===id);
+      if (!found) return;
+      found.q += d;
+      if (found.q <= 0) cart = cart.filter(x => x.id!==id);
+      syncCart();
+    }
+
+    function syncCart() {
+      localStorage.setItem("cl_cart", JSON.stringify(cart));
+      document.getElementById("cnt").textContent = cart.reduce((a,b)=>a+b.q, 0);
+      let tot = 0;
+      document.getElementById("cList").innerHTML = cart.length ? cart.map(c => {
+        const p = items.find(x => x.id===c.id);
+        tot += p.price * c.q;
+        return `<div class="c-row"><div><strong>${p.name}</strong><div style="color:var(--muted);font-size:.82rem">$${p.price.toFixed(2)}</div></div><div style="display:flex;align-items:center;gap:.4rem"><button class="q-btn" onclick="chgQty('${p.id}',-1)">-</button><span>${c.q}</span><button class="q-btn" onclick="chgQty('${p.id}',1)">+</button></div></div>`;
+      }).join("") : `<p style="color:var(--muted);text-align:center;margin-top:2rem">Your cart is empty.</p>`;
+      document.getElementById("cTotal").textContent = `$${tot.toFixed(2)}`;
+    }
+
+    render(); syncCart();
+  </script>
+</body>
+</html>
